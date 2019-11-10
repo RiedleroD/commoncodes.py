@@ -4,7 +4,7 @@ from setuptools import setup
 
 curdir=os.path.abspath(os.path.dirname(__file__))
 
-with open(os.path.join(curdir,"Readme.md")) as f:
+with open(os.path.join(curdir,"README.md")) as f:
 	README=f.read()
 
 setup(
@@ -23,6 +23,6 @@ setup(
     ],
     packages=["commoncodes"],
     include_package_data=True,
-    install_requires=["traceback"],
+    install_requires=[],
     entry_points={},
 )
