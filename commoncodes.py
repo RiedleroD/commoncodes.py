@@ -1,4 +1,4 @@
-#!usr/bin/python3
+#!/usr/bin/python3
 import sys
 from traceback import print_tb
 messages=[
@@ -76,5 +76,3 @@ sys.excepthook=lambda exctype,value,trace:cchandler(exctype,value,trace) if isin
 def settb(trace:bool=True):
 	global tb
 	tb=trace
-if __name__=="__main__":
-	print("Standardized exit codes provided by Commoncodes.\nFind more information at https://mfederczuk.github.io/commoncodes/v/latest.html.")
