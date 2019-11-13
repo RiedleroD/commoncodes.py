@@ -58,12 +58,20 @@ class CommonCode(Exception):
 		for arg in args:
 			if type(arg)==int:
 				self.excode=arg
+			elif type(arg)==float:
+				if arg%1==0:
+					self.excode=int(arg)
 			elif type(arg)==str:
 				messargs.append(arg)
+			else:
+				messargs.append(str(arg))
 		try:
 			self.message=messages[self.excode]%tuple(messargs)
 		except IndexError:
-			self.message="Unknown error: %s"%tuple(messargs)
+			try:
+				self.message="Unknown error: %s"%messargs[0]
+			except IndexError:
+				self.message="Unknown error"
 def cchandler(exctype,value,trace):
 		if tb:
 			print_tb(trace)

@@ -9,7 +9,7 @@ with open(os.path.join(curdir,"README.md")) as f:
 
 setup(
     name="commoncodes",
-    version="1.0.0",
+    version="1.0.1",
     description="Uses the commoncodes standard to create more specific Exceptions",
     long_description=README,
     long_description_content_type="text/markdown",
