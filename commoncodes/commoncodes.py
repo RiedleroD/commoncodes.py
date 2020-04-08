@@ -2,37 +2,42 @@
 import sys
 from traceback import print_tb
 messages=[
-	"success",
+	"success",	#0
 	"generic error: %s",
 	"generic usage error: %s",
 	"%s: missing argument[s]: %s",
 	"%s: too many arguments: %s",
 	"%s: invalid option",
 	"%s: unexpected option",
-	"%s: invalid argument%s",
+	"%s %s: invalid argument%s",
 	"%s: unknown [sub]command",
-	"%s %s %s may not be empty",
-	"%s %s: not a number",
+	"%s argument %s may not be empty",
+	"%s %s: not a number",#10
 	"%s %s: out of range(%s)",
-	"%s %s: does not match: %s",
+	"%s %s: does not match: %s",#12
 	"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s",	#custom usage errors
-	"%s: no such %s",
+	"%s: no such %s",#24
 	"%s: not an %s",
 	"network error: %s",
 	"no network connection",
 	"connection timed out",
-	"arithmetic error: %s",
+	"arithmetic error: %s",#29
 	"divided by 0 error",
-	"over/underflow error",
-	"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s", #custom feedback statuses
-	"%s","%s","%s","%s","%s","%s", #custom errors
-	"command line usage error: %s",
+	"over/underflow error",#31
+	#custom feedback statuses
+	"%s","%s","%s","%s","%s","%s","%s","%s","%s",#40
+	"%s","%s","%s","%s","%s","%s","%s",#47
+	#custom errors
+	"%s","%s","%s",#50
+	"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s",#60
+	"%s","%s","%s",#63
+	"command line usage error: %s",#64
 	"data format error: %s",
 	"cannot open input: %s",
 	"adressee unknown: %s",
 	"host name unknown: %s",
 	"service unavailable: %s",
-	"internal software error: %s",
+	"internal software error: %s",#70
 	"system error: %s",
 	"critical OS file missing: %s",
 	"can't create (user) output file: %s",
@@ -40,16 +45,22 @@ messages=[
 	"temp failure: %s",
 	"remote error in protocol: %s",
 	"permission denied: %s",
-	"configuration error: %s",
-	"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s", #custom configuration error
+	"configuration error: %s",#78
+	#custom configuration error
+	"%s","%s",#80
+	"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s",#90
+	"%s","%s","%s","%s","%s","%s","%s","%s",#98
 	"memory error: %s",
-	"not enough memory",
+	"not enough memory",#100
 	"stack overflow error",
 	"generic internal fault:%s",
-	"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s",
+	#custom internal faults
+	"%s","%s","%s","%s","%s","%s","%s","%s",#110
+	"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s",#120
+	"%s","%s",#122
 	"emergency stop: %s",
-	"script was [not] called interactively",
-	"Unknown Error"]
+	"script was %s called interactively",
+	"Unknown Error"]#125
 tb=True
 class CommonCode(Exception):
 	excode=1
@@ -66,12 +77,17 @@ class CommonCode(Exception):
 			else:
 				messargs.append(str(arg))
 		try:
-			self.message=messages[self.excode]%tuple(messargs)
+			ex=messages[self.excode]
 		except IndexError:
-			try:
-				self.message="Unknown error: %s"%messargs[0]
-			except IndexError:
-				self.message="Unknown error"
+			raise CommonCode(70,"Unknown CommonCode was used (%i)"%self.excode)
+		else:
+			messargs=tuple(messargs)
+			c=ex.count("%")
+			if c!=len(messargs):
+				raise CommonCode(70,"Arguments do not match format string: %s|%s"%(ex,messargs))
+			else:
+				self.message=ex%messargs
+
 def cchandler(exctype,value,trace):
 		if tb:
 			print_tb(trace)
