@@ -9,13 +9,13 @@ with open(os.path.join(curdir,"README.md")) as f:
 
 setup(
     name="commoncodes",
-    version="1.0.2",
+    version="1.0.3",
     description="Uses the commoncodes standard to create more specific Exceptions",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/RiedleroD/commoncodes.py",
     author="Riedler",
-    author_email="riedler@gelse.net",
+    author_email="dev@riedler.wien",
     license="Creative Commons BY-SA 4.0",
     classifiers=[
         "Programming Language :: Python :: 3",
